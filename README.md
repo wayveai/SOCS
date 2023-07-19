@@ -1,6 +1,6 @@
 # Self-supervised Object-Centric Segmentation (SOCS)
 
-Code repository for the paper "Linking vision and motion for self-supervised object-centric perception."
+Code repository for the paper [Linking vision and motion for self-supervised object-centric perception](http://arxiv.org/abs/2307.07147).
 
 ![gif](./assets/example.gif)
 
@@ -42,3 +42,13 @@ Quantitative metrics and video clips of the qualitative results can be generated
 <pre><code>python analysis.py example_logdir/version_0 --split val --num_seq_to_analyze 208 --num_seq_to_plot 10 --gpu 0</code></pre>
 
 The GPU memory requirements can be reduced by setting the `--parallel_pix` flag to a smaller value. Additional figures in the paper were generated with the functions in `figures.py`.
+
+## Citation
+If you find our work helpful, please cite our paper:
+
+<pre><code>@article{stocking2023linking,
+  title={Linking vision and motion for self-supervised object-centric perception},
+  author={Stocking, Kaylene C and Murez, Zak and Badrinarayanan, Vijay and Shotton, Jamie and Kendall, Alex and Tomlin, Claire and Burgess, Christopher P},
+  journal={arXiv preprint arXiv:2307.07147},
+  year={2023}
+}</code></pre>
