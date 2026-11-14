@@ -369,13 +369,13 @@ class SOCS(LightningModule):
         """
         frame_pred_seg = np.argmax(per_object_weights, 0).reshape(dims)[idx]
         frame_instance_oh = instance_oh.reshape(dims + (-1,)).astype('uint8')[idx]
-        frame_instance_seg_flat = np.zeros(dims[1:], dtype='uint8').flatten()
+        frame_instance_seg_flat = np.zeros(dims[1:], dtype=np.int64).flatten()
         n_total_ground_truth_obj = frame_instance_oh.shape[-1]
         frame_instance_oh_flat = frame_instance_oh.reshape(-1, n_total_ground_truth_obj)
         for i in range(n_total_ground_truth_obj):
             mask = np.where(frame_instance_oh_flat[:, i] == 1)
             if len(mask) > 0:
-                frame_instance_seg_flat[mask] = i
+                frame_instance_seg_flat[mask] = i + 1
 
         foreground_inds = np.where(frame_instance_seg_flat != 0)
         ground_truth_seg_foreground = frame_instance_seg_flat[foreground_inds]
