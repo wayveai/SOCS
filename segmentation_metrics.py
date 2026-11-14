@@ -90,8 +90,8 @@ def get_centroid_matches(pred_weights, gt_weights):
 
     (row_ind, col_ind) = linear_sum_assignment(obj_dists)
     best_dists = obj_dists[row_ind, col_ind]
-    gt_inds = np.array(large_gt_obj_inds)
-    pred_inds = col_ind
+    gt_inds = np.array(large_gt_obj_inds, dtype=int)[row_ind]
+    pred_inds = argmaxed_pred_obj[col_ind]
     return (best_dists, pred_inds, gt_inds)
 
 def closest_centroids_metric(pred_weights, gt_weights):
