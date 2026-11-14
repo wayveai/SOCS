@@ -118,8 +118,8 @@ class SOCSDataset(Dataset):
         data = dict(
             img_seq = img_seq.astype('float32'),
             decode_dims = np.array([num_frames, 
-                           self.img_dim_hw[0] // self.decode_pixel_downsample_factor,
-                           self.img_dim_hw[1] // self.decode_pixel_downsample_factor]),
+                           len(range(random_h_offset, self.img_dim_hw[0], self.decode_pixel_downsample_factor)),
+                           len(range(random_w_offset, self.img_dim_hw[1], self.decode_pixel_downsample_factor))]),
             ground_truth_rgb = img_seq[decode_mask],
             patch_positional_embeddings = patch_positional_embeddings.astype('float32'),
             decoder_queries = decoder_queries.astype('float32'),
@@ -143,7 +143,7 @@ class LocalDataset(SOCSDataset):
             img_seq = img_seq.reshape((num_frames,) + img_seq.shape[2:]).astype('float32')
             viewpoint_seq = data['viewpoint_transform'][:self.seq_len, self.camera_choice]
             viewpoint_seq = viewpoint_seq.reshape((num_frames,) + viewpoint_seq.shape[2:])
-            time_seq = data['time'][:self.seq_len].flatten()
+            time_seq = data['time'][:self.seq_len, self.camera_choice].flatten()
 
             loaded_data = dict(img_seq=img_seq,
                                viewpoint_seq=viewpoint_seq,
@@ -163,7 +163,7 @@ class LocalDataset(SOCSDataset):
         with open(data_path, 'rb') as f:
             data = np.load(f)
             if 'instance_seg' in data:
-                instance_segs = data['instance_seg']
+                instance_segs = data['instance_seg'][:self.seq_len, self.camera_choice]
                 instance_segs = instance_segs.reshape((num_frames,) + instance_segs.shape[2:])[decode_mask]
             else:
                 instance_segs = np.zeros(item['img_seq'].shape[:-1])
