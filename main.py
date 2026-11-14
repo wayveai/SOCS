@@ -218,7 +218,7 @@ if __name__ == '__main__':
     parser.add_argument('--behavioral_cloning_task', action='store_true')
     parser.add_argument('--sequence_length', type=int, default=8)
     parser.add_argument('--beta', type=float, default=5e-7)
-    parser.add_argument('--bc_loss_weight')
+    parser.add_argument('--bc_loss_weight', type=float, default=1e-4)
     parser.add_argument('--sigma', type=float, default=0.08)
     parser.add_argument('--downsample_factor', type=int, default=16)
     parser.add_argument('--num_patches_height', type=int, default=None)
@@ -288,6 +288,7 @@ if __name__ == '__main__':
                  provide_viewpoint=not args.no_viewpoint,
                  num_gaussian_heads=args.num_gaussian_heads,
                  bc_task=args.behavioral_cloning_task,
+                 bc_loss_weight=args.bc_loss_weight,
                  seed=args.seed,
                  dataset_name=args.dataset,
                  dataset_root=args.data_root,
